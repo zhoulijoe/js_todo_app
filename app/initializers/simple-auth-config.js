@@ -7,7 +7,7 @@ export default {
       container.register('authenticator:custom-oauth', OAuthAuthenticator);
       window.ENV = window.ENV || {};
       window.ENV['simple-auth-oauth2'] = {
-         serverTokenEndpoint: "http://192.168.1.17/todo/oauth/token",
+         serverTokenEndpoint: "http://10.20.1.2/todo/oauth/token",
          refreshAccessTokens: true
       };
    }

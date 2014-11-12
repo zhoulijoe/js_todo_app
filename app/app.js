@@ -8,7 +8,7 @@ Ember.MODEL_FACTORY_INJECTIONS = true;
 window.ENV = window.ENV || {};
 window.ENV['simple-auth'] = {
    authorizer: 'simple-auth-authorizer:oauth2-bearer',
-   crossOriginWhitelist: ['http://192.168.1.17:80']
+   crossOriginWhitelist: ['http://10.20.1.2:80']
 };
 
 var App = Ember.Application.extend({
