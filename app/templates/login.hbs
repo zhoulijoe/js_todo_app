@@ -1,6 +1,9 @@
 <h2>Login</h2>
 
-<input type="text" id="username" placeholder="Enter username" /><br>
-<input type="password" id="password" placeholder="Enter password" /><br>
-
-<button type="button" id="loginButton">Login</button>
+<form {{action 'authenticate' on='submit'}}>
+    <label for="identification">Login</label>
+   {{input id='identification' placeholder='Enter Login' value=identification}}
+    <label for="password">Password</label>
+   {{input id='password' placeholder='Enter Password' type='password' value=password}}
+    <button type="submit">Login</button>
+</form>

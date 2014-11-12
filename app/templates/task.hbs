@@ -1,3 +1,9 @@
+{{#if session.isAuthenticated}}
+    <a {{ action 'invalidateSession' }}>Logout</a>
+{{else}}
+   {{#link-to 'login'}}Login{{/link-to}}
+{{/if}}
+
 <section id="todoapp">
     <header id="header">
         <h1>todos</h1>
@@ -15,13 +21,13 @@
         </span>
         <ul id="filters">
             <li>
-               {{#link-to "tasks.index" activeClass="selected"}}All{{/link-to}}
+               {{#link-to "task.index" activeClass="selected"}}All{{/link-to}}
             </li>
             <li>
-               {{#link-to "tasks.active" activeClass="selected"}}Active{{/link-to}}
+               {{#link-to "task.active" activeClass="selected"}}Active{{/link-to}}
             </li>
             <li>
-               {{#link-to "tasks.completed" activeClass="selected"}}Completed{{/link-to}}
+               {{#link-to "task.completed" activeClass="selected"}}Completed{{/link-to}}
             </li>
         </ul>
 

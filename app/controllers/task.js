@@ -1,39 +1,57 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
-   isCompleted: function(key, value){
-      var model = this.get('model');
+export default Ember.ArrayController.extend({
+   actions: {
+      createTodo: function() {
+         // Get the todo title set by the "New Todo" text field
+         var title = this.get('newTitle');
+         if (!title) { return false; }
+         if (!title.trim()) { return; }
 
+         // Create the new Todo model
+         var todo = this.store.createRecord('task', {
+            description: title,
+            complete: false
+         });
+
+         // Clear the "New Todo" text field
+         this.set('newTitle', '');
+
+         // Save the new model
+         todo.save();
+      },
+
+      clearCompleted: function() {
+         var completed = this.filterBy('complete', true);
+         completed.invoke('deleteRecord');
+         completed.invoke('save');
+      }
+   },
+
+   remaining: function() {
+      return this.filterBy('complete', false).get('length');
+   }.property('@each.complete'),
+
+   inflection: function() {
+      var remaining = this.get('remaining');
+      return remaining === 1 ? 'todo' : 'todos';
+   }.property('remaining'),
+
+   hasCompleted: function() {
+      return this.get('completed') > 0;
+   }.property('completed'),
+
+   completed: function() {
+      return this.filterBy('complete', true).get('length');
+   }.property('@each.complete'),
+
+   allAreDone: function(key, value) {
       if (value === undefined) {
-         // property being used as a getter
-         return model.get('complete');
+         return !!this.get('length') && this.isEvery('complete', true);
       } else {
-         // property being used as a setter
-         model.set('complete', value);
-         model.save();
+         this.setEach('complete', value);
+         this.invoke('save');
          return value;
       }
-   }.property('model.complete'),
-
-   isEditing: false,
-
-   actions: {
-      editTodo: function() {
-         this.set('isEditing', true);
-      },
-      acceptChanges: function() {
-         this.set('isEditing', false);
-
-         if (Ember.isEmpty(this.get('model.description'))) {
-            this.send('removeTodo');
-         } else {
-            this.get('model').save();
-         }
-      },
-      removeTodo: function () {
-         var todo = this.get('model');
-         todo.deleteRecord();
-         todo.save();
-      }
-   }
+   }.property('@each.complete')
 });

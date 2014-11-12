@@ -6,7 +6,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('login');
-  this.resource('tasks', { path: 'tasks' }, function () {
+  this.resource('task', { path: 'task' }, function () {
      this.route('active');
      this.route('completed');
   });
